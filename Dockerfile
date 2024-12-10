@@ -16,12 +16,13 @@ COPY ["src/clubpet_backend/clubpet_backend.csproj", "clubpet_backend/"]
 RUN dotnet restore "./clubpet_backend/clubpet_backend.csproj"
 COPY . .
 WORKDIR "/src/clubpet_backend/"
-RUN dotnet build "src/clubpet_backend/clubpet_backend.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build src/clubpet_backend/clubpet_backend.csproj -c $BUILD_CONFIGURATION -o /app/build
+
 
 # Esta fase é usada para publicar o projeto de serviço a ser copiado para a fase final
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "src/clubpet_backend/clubpet_backend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish src/clubpet_backend/clubpet_backend.csproj -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Esta fase é usada na produção ou quando executada no VS no modo normal (padrão quando não está usando a configuração de Depuração)
 FROM base AS final
