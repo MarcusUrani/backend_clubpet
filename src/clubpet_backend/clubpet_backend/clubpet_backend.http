@@ -1,0 +1,6 @@
+@clubpet_backend_HostAddress = http://localhost:5130
+
+GET {{clubpet_backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
