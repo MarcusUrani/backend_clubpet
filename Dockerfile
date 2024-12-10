@@ -11,9 +11,11 @@ EXPOSE 8081
 # Esta fase é usada para compilar o projeto de serviço
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
-COPY ["clubpet_backend.csproj", "."]
-RUN dotnet restore "./clubpet_backend.csproj"
+WORKDIR /src
+COPY ["/clubpet_backend/clubpet_backend.csproj", "clubpet_backend/"]
+RUN dotnet restore "./clubpet_backend/clubpet_backend.csproj"
 COPY . .
+WORKDIR "/src/clubpet_backend/"
 RUN dotnet build "/clubpet_backend.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 
