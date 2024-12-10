@@ -15,6 +15,8 @@ COPY . .
 
 RUN dotnet build "src/clubpet_backend/clubpet_backend.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+RUN sed -i -e "s|^MinProtocol = .*|MinProtocol = TLSv1.0|g" "/etc/ssl/openssl.cnf"
+
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "src/clubpet_backend/clubpet_backend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
