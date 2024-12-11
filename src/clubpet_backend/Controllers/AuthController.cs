@@ -30,9 +30,15 @@ namespace UserAuthBackend.Controllers
         {
             var loggedInUser = await _userService.LoginAsync(user.Username, user.PasswordHash);
             if (loggedInUser == null)
-                return Unauthorized("Credenciais inválidas.");
+                return Unauthorized(new { message = "Credenciais inválidas." });
 
-            return Ok(new { message = "Login bem-sucedido!" });
+            // Você pode gerar um token JWT aqui para maior segurança, se necessário
+            return Ok(new
+            {
+                message = "Login bem-sucedido!",
+                username = loggedInUser.Username,
+                isAuthenticated = true
+            });
         }
     }
 }
